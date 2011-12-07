@@ -7,7 +7,7 @@ Pull requests will be gladly accepted.
 ## Examples
 Saving a picture from the Kinect's RGB camera
 
-```C#
+```csharp
 KinectSensor sensor = KinectSensor.Start(RuntimeOptions.UseColor);	//Get the sensor and tell it you want to use the color camera
 sensor.StartVideoFrames(ImageResolution.Resolution1280x1024);       //Tell it to turn the camera on and return images at 1280x1024
 
