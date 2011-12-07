@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObservableKinect", "ObservableKinect\ObservableKinect.csproj", "{844B1CCD-BB38-448F-9EA5-4D539431A7E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObservableKinect.Speech", "ObservableKinect.Speech\ObservableKinect.Speech.csproj", "{72C2DC54-34B7-4FE4-BE85-C8B90844EAC9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{844B1CCD-BB38-448F-9EA5-4D539431A7E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{844B1CCD-BB38-448F-9EA5-4D539431A7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{844B1CCD-BB38-448F-9EA5-4D539431A7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{844B1CCD-BB38-448F-9EA5-4D539431A7E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C2DC54-34B7-4FE4-BE85-C8B90844EAC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C2DC54-34B7-4FE4-BE85-C8B90844EAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C2DC54-34B7-4FE4-BE85-C8B90844EAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C2DC54-34B7-4FE4-BE85-C8B90844EAC9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
