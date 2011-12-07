@@ -35,3 +35,18 @@ void SaveFrame(ImageFrame frame)
 	}
 }
 ```
+
+Responding to speech - note you'll need the [Microsoft Speech SDK](https://www.microsoft.com/download/en/details.aspx?id=14373) in addition to the [Kinect SDK](http://kinectforwindows.org/).
+
+```csharp
+SpeechObserverHost speechHost = new SpeechObserverHost("red", "green", "yellow");
+speechHost
+	.SpeechRecognized
+	.Where(e => e.Result != null && e.Result.Confidence > 0.9)
+	.Subscribe(OnSpeechRecognized);
+	
+void OnSpeechRecognized(SpeechRecognizedEventArgs e)
+{
+	Console.WriteLine("SpeechRecognized: \"{0}\" with an confidence of {1}", e.Result.Text, e.Result.Confidence);
+}
+```
