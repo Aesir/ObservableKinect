@@ -10,6 +10,18 @@ namespace ObservableKinect
 	/// </summary>
 	public class KinectSensor
 	{
+		[ContractInvariantMethod]
+		private void ObjectInvariant()
+		{
+			Contract.Invariant(ourKinectSensors != null);
+			Contract.Invariant(ourKinectSensors.Length == Runtime.Kinects.Count);
+
+			Contract.Invariant(myIndex >= 0 && myIndex < Runtime.Kinects.Count);
+			Contract.Invariant(_DepthFrames != null);
+			Contract.Invariant(_SkeletonFrames != null);
+			Contract.Invariant(_VideoFrames != null);
+		}
+
 		#region Factory
 
 		private static readonly KinectSensor[] ourKinectSensors = new KinectSensor[Runtime.Kinects.Count];
@@ -23,6 +35,7 @@ namespace ObservableKinect
 		public static KinectSensor Start(RuntimeOptions options, int kinectIndex = 0)
 		{
 			Contract.Requires(kinectIndex > 0 && kinectIndex < Runtime.Kinects.Count);
+			Contract.Ensures(Contract.Result<KinectSensor>() != null && ReferenceEquals(Contract.Result<KinectSensor>().Device, Runtime.Kinects[kinectIndex]));
 
 			lock (ourKinectSensors)
 			{
@@ -37,6 +50,8 @@ namespace ObservableKinect
 
 		private static void AddRuntimeOptions(KinectSensor sensor, RuntimeOptions options)
 		{
+			Contract.Requires(sensor != null);
+
 			sensor.myOptions |= options;
 
 			sensor.Device.Uninitialize();
@@ -55,7 +70,7 @@ namespace ObservableKinect
 		/// <param name="options">The options to apply to the sensor to start with.</param>
 		protected KinectSensor(int index, RuntimeOptions options)
 		{
-			Contract.Requires(index > 0 && index < Runtime.Kinects.Count);
+			Contract.Requires(index >= 0 && index < Runtime.Kinects.Count);
 
 			myIndex = index;
 			myOptions = options;
@@ -72,7 +87,12 @@ namespace ObservableKinect
 		/// </summary>
 		public Runtime Device
 		{
-			get { return Runtime.Kinects[myIndex]; }
+			get
+			{
+				Contract.Ensures(Contract.Result<Runtime>() != null);
+
+				return Runtime.Kinects[myIndex];
+			}
 		}
 
 		/// <summary>
@@ -82,6 +102,8 @@ namespace ObservableKinect
 		{
 			get
 			{
+				Contract.Ensures(Contract.Result<IObservable<ImageFrameReadyEventArgs>>() != null);
+
 				return _DepthFrames;
 			}
 		}
@@ -101,6 +123,8 @@ namespace ObservableKinect
 		{
 			get
 			{
+				Contract.Ensures(Contract.Result<IObservable<SkeletonFrameReadyEventArgs>>() != null);
+
 				return _SkeletonFrames;
 			}
 		}
@@ -113,6 +137,8 @@ namespace ObservableKinect
 		{
 			get
 			{
+				Contract.Ensures(Contract.Result<IObservable<ImageFrameReadyEventArgs>>() != null);
+
 				return _VideoFrames;
 			}
 		}
@@ -135,6 +161,7 @@ namespace ObservableKinect
 		{
 			Contract.Requires(!this.DepthFramesRunning);
 			Contract.Requires(numBuffers > 0);
+			Contract.Ensures(this.DepthFramesRunning);
 
 			if (!this.DepthFramesRunning)
 			{
@@ -155,6 +182,7 @@ namespace ObservableKinect
 			Contract.Requires(!this.VideoFramesRunning);
 			Contract.Requires(type == ImageType.Color || type == ImageType.ColorYuv || type == ImageType.ColorYuvRaw);
 			Contract.Requires(numBuffers > 0);
+			Contract.Ensures(this.VideoFramesRunning);
 
 			if (!this.VideoFramesRunning)
 			{

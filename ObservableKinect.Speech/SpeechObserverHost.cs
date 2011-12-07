@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -22,6 +23,23 @@ namespace ObservableKinect.Speech
 		private static int ourActiveHostsCounter = 0;
 		private static readonly object ourCounterLock = new object();
 
+		[ContractInvariantMethod]
+		private void ObjectInvariant()
+		{
+			//Statics
+			Contract.Invariant(ourActiveHostsCounter >= 0);
+			Contract.Invariant(ourKinectSource != null);
+			Contract.Invariant(ourSpeechEngine != null);
+			Contract.Invariant(ourCounterLock != null);
+
+			//Instance
+			Contract.Invariant(myGrammars != null);
+			Contract.Invariant(_SpeechHypothesized != null);
+			Contract.Invariant(_SpeechRecognized != null);
+			Contract.Invariant(_SpeechRecognitionRejected != null);
+			Contract.Invariant(_SpeechDetected != null);
+		}
+
 		private readonly ISet<Grammar> myGrammars;
 
 		#region IObservable Properties
@@ -33,6 +51,8 @@ namespace ObservableKinect.Speech
 		{
 			get
 			{
+				Contract.Ensures(Contract.Result<IObservable<SpeechHypothesizedEventArgs>>() != null);
+
 				return _SpeechHypothesized;
 			}
 		}
@@ -45,6 +65,8 @@ namespace ObservableKinect.Speech
 		{
 			get
 			{
+				Contract.Ensures(Contract.Result<IObservable<SpeechRecognizedEventArgs>>() != null);
+
 				return _SpeechRecognized;
 			}
 		}
@@ -57,6 +79,8 @@ namespace ObservableKinect.Speech
 		{
 			get
 			{
+				Contract.Ensures(Contract.Result<IObservable<SpeechRecognitionRejectedEventArgs>>() != null);
+
 				return _SpeechRecognitionRejected;
 			}
 		}
@@ -69,6 +93,8 @@ namespace ObservableKinect.Speech
 		{
 			get
 			{
+				Contract.Ensures(Contract.Result<IObservable<SpeechDetectedEventArgs>>() != null);
+
 				return _SpeechDetected;
 			}
 		}
@@ -97,6 +123,8 @@ namespace ObservableKinect.Speech
 		public SpeechObserverHost(IEnumerable<string> keyWords)
 			: this(keyWords.ToArray())
 		{
+			Contract.Requires(keyWords != null);
+			Contract.Requires(keyWords.Any());
 		}
 
 		/// <summary>
@@ -106,6 +134,8 @@ namespace ObservableKinect.Speech
 		public SpeechObserverHost(params string[] keyWords)
 			: this(new Grammar(new Choices(keyWords.ToArray()).ToGrammarBuilder()))
 		{
+			Contract.Requires(keyWords != null);
+			Contract.Requires(keyWords.Any());
 		}
 
 		/// <summary>
@@ -114,7 +144,10 @@ namespace ObservableKinect.Speech
 		/// <param name="grammars">The grammars you want the speech engine to recognize.</param>
 		public SpeechObserverHost(params Grammar[] grammars)
 			: this((IEnumerable<Grammar>)grammars)
-		{ }
+		{
+			Contract.Requires(grammars != null);
+			Contract.Requires(grammars.Any());
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SpeechObserverHost"/> class.
@@ -122,6 +155,9 @@ namespace ObservableKinect.Speech
 		/// <param name="grammars">The grammars you want the speech engine to recognize.</param>
 		public SpeechObserverHost(IEnumerable<Grammar> grammars)
 		{
+			Contract.Requires(grammars != null);
+			Contract.Requires(grammars.Any());
+
 			myGrammars = new HashSet<Grammar>(grammars);
 			foreach (var grammar in myGrammars)
 			{
@@ -145,6 +181,9 @@ namespace ObservableKinect.Speech
 
 		private IObservable<T> EventFilterAndArgsSelector<T>(IObservable<EventPattern<T>> xs) where T : RecognitionEventArgs
 		{
+			Contract.Requires(xs != null);
+			Contract.Ensures(Contract.Result<IObservable<T>>() != null);
+
 			return xs.Where(ep => myGrammars.Contains(ep.EventArgs.Result.Grammar)).Select(ep => ep.EventArgs);
 		}
 
