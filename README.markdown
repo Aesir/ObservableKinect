@@ -39,10 +39,10 @@ void SaveFrame(ImageFrame frame)
 Responding to speech - note you'll need the [Microsoft Speech SDK](https://www.microsoft.com/download/en/details.aspx?id=14373) in addition to the [Kinect SDK](http://kinectforwindows.org/).
 
 ```csharp
-SpeechObserverHost speechHost = new SpeechObserverHost("red", "green", "yellow");
+SpeechObserverHost speechHost = new SpeechObserverHost("red", "green", "yellow");  //The strings are a convenient shortcut but you can also use a full Grammar
 speechHost
 	.SpeechRecognized
-	.Where(e => e.Result != null && e.Result.Confidence > 0.9)
+	.Where(e => e.Result != null && e.Result.Confidence > 0.9)  //We really only want the results where it's pretty confident or we'll get a lot of false positives
 	.Subscribe(OnSpeechRecognized);
 	
 void OnSpeechRecognized(SpeechRecognizedEventArgs e)
