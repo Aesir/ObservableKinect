@@ -9,6 +9,9 @@ using Microsoft.Speech.Recognition;
 
 namespace ObservableKinect.Speech
 {
+	/// <summary>
+	/// Hosts observers for the various events that come from the Kinect's speech engine
+	/// </summary>
 	public class SpeechObserverHost
 		: IDisposable
 	{
@@ -87,20 +90,36 @@ namespace ObservableKinect.Speech
 			ourSpeechEngine.SetInputToAudioStream(ourKinectSource.Start(), new SpeechAudioFormatInfo(EncodingFormat.Pcm, 16000, 16, 1, 32000, 2, null));
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SpeechObserverHost"/> class.
+		/// </summary>
+		/// <param name="keyWords">The keywords you want the speech engine to recognize.</param>
 		public SpeechObserverHost(IEnumerable<string> keyWords)
 			: this(keyWords.ToArray())
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SpeechObserverHost"/> class.
+		/// </summary>
+		/// <param name="keyWords">The keywords you want the speech engine to recognize.</param>
 		public SpeechObserverHost(params string[] keyWords)
 			: this(new Grammar(new Choices(keyWords.ToArray()).ToGrammarBuilder()))
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SpeechObserverHost"/> class.
+		/// </summary>
+		/// <param name="grammars">The grammars you want the speech engine to recognize.</param>
 		public SpeechObserverHost(params Grammar[] grammars)
 			: this((IEnumerable<Grammar>)grammars)
 		{ }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SpeechObserverHost"/> class.
+		/// </summary>
+		/// <param name="grammars">The grammars you want the speech engine to recognize.</param>
 		public SpeechObserverHost(IEnumerable<Grammar> grammars)
 		{
 			myGrammars = new HashSet<Grammar>(grammars);
@@ -133,6 +152,9 @@ namespace ObservableKinect.Speech
 
 		private bool disposed = false;
 
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
 		public void Dispose()
 		{
 			Dispose(true);
@@ -140,13 +162,15 @@ namespace ObservableKinect.Speech
 			GC.SuppressFinalize(this);
 		}
 
-		// Dispose(bool disposing) executes in two distinct scenarios.
-		// If disposing equals true, the method has been called directly
-		// or indirectly by a user's code. Managed and unmanaged resources
-		// can be disposed.
-		// If disposing equals false, the method has been called by the
-		// runtime from inside the finalizer and you should not reference
-		// other objects. Only unmanaged resources can be disposed.
+		///<summary>
+		/// Dispose(bool disposing) executes in two distinct scenarios.
+		/// If disposing equals true, the method has been called directly
+		/// or indirectly by a user's code. Managed and unmanaged resources
+		/// can be disposed.
+		/// If disposing equals false, the method has been called by the
+		/// runtime from inside the finalizer and you should not reference
+		/// other objects. Only unmanaged resources can be disposed.
+		/// </summary>
 		protected virtual void Dispose(bool disposing)
 		{
 			if (!this.disposed)
@@ -172,6 +196,10 @@ namespace ObservableKinect.Speech
 			}
 		}
 
+		/// <summary>
+		/// Releases unmanaged resources and performs other cleanup operations before the
+		/// <see cref="SpeechObserverHost"/> is reclaimed by garbage collection.
+		/// </summary>
 		~SpeechObserverHost()
 		{
 			Dispose(false);
