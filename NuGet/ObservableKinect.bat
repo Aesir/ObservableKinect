@@ -1,0 +1,1 @@
+NuGet Pack ObservableKinect.nuspec -BasePath ../ObservableKinect/bin/x86/Release -Symbols

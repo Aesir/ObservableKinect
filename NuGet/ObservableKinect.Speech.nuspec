@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ObservableKinect.Speech</id>
+    <version>0.8.0.0</version>
+    <title>Observable Kinect for the Speech SDK</title>
+    <authors>Bryan Anderson</authors>
+    <owners>Bryan Anderson</owners>
+    <licenseUrl>http://www.opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://github.com/Aesir/ObservableKinect</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An Rx wrapper and facade for the speech component of the Kinect for Windows SDK</description>
+    <releaseNotes>Initial alpha-grade release</releaseNotes>
+    <copyright>Copyright 2011</copyright>
+    <tags>Rx ReactiveExtensions Observable Kinect</tags>
+	<dependencies>
+      <dependency id="Rx-Main" version="1.0.10621" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ObservableKinect.Speech.dll" target="lib/net40" />
+    <file src="ObservableKinect.Speech.pdb" target="lib/net40" />
+	<file src="ObservableKinect.Speech.xml" target="lib/net40" />
+  </files>
+</package>
