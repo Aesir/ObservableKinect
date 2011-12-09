@@ -1,0 +1,1 @@
+NuGet Pack ObservableKinect.Speech.nuspec -BasePath ../ObservableKinect.Speech/bin/x86/Release -Symbols
