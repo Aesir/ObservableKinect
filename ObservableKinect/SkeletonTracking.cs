@@ -56,7 +56,7 @@ namespace ObservableKinect
 			//    .Subscribe(PrintSkeletonFrames);
 
 			_SkeletonPresent = skeletonFrames
-				.Select(sf => sf.Skeletons.Any(skel => skel.TrackingState != SkeletonTrackingState.PositionOnly))
+				.Select(sf => sf.Skeletons.Any(skel => skel.TrackingState != SkeletonTrackingState.NotTracked))
 				.DistinctUntilChanged();
 
 			mySkeletonTracker = new SkeletonDispatcher(skeletonFrames.Select(sf => sf.Skeletons));
