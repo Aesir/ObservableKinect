@@ -63,6 +63,8 @@
   <ItemGroup>
     <Compile Include="KinectSensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkeletonDispatcher.cs" />
+    <Compile Include="SkeletonTracking.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
