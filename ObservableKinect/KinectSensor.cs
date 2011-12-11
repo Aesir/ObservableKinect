@@ -34,6 +34,7 @@ namespace ObservableKinect
 		/// <returns>A sensor instance which will allow you to operate on the Kinect that was just started.</returns>
 		public static KinectSensor Start(RuntimeOptions options, int kinectIndex = 0)
 		{
+			Contract.Requires(0 < Runtime.Kinects.Count);
 			Contract.Requires(kinectIndex >= 0 && kinectIndex < Runtime.Kinects.Count);
 			Contract.Ensures(Contract.Result<KinectSensor>() != null && ReferenceEquals(Contract.Result<KinectSensor>().Device, Runtime.Kinects[kinectIndex]));
 
